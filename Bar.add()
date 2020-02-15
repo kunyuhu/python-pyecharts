@@ -1,0 +1,39 @@
+#导入柱状图bar
+from pyecharts import Bar
+
+#设置柱状图的主标题与副标题
+bar=Bar("柱状图（标题）","一年的降水量和蒸发量（副标题）")
+
+#配置主题
+bar.use_theme('dark')  # 设置背景色为“暗色”。需要设置主题背景色时调用use_theme() 函数
+
+#设置x轴数据
+columns=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+
+#设置y轴数据
+data_1=[2.0,4.9,7.0,23.2,25.6,76.7,135.6,162.2,32.6,20.0,6.4,3.3]
+data_2=[2.6,5.9,9.0,26.4,28.7,70.7,175.6,182.2,48.7,18.8,6.0,2.3]
+
+#添加柱状图的数据及配置项
+bar.add(
+    "降水量",columns,data_1,  #绘图关键信息：图例名称（注释==label），x轴数据，y轴数据
+    mark_line=["average"],  #标记平均值
+    mark_point=["max","min"],  #标记极值
+    is_stack =False,  #数据堆叠，同个类目轴上系列配置相同的stack 值可以堆叠放置。is_stack = True表示堆叠在一起绘制堆叠（柱状）图
+    bar_category_gap ='20%',  #类目轴柱状距离，默认20%
+    is_more_utils=True #提供更多实用工具按钮
+)
+bar.add( 
+    "蒸发量",columns,data_2,
+    mark_line=["average"],
+    mark_point=["max","min"],
+    is_stack =False,  
+    bar_category_gap ='20%', 
+    is_more_utils=True
+    # is_convert = True ， X 轴与 Y 轴交换，将柱状图改为条形图
+)
+
+# bar.print_echarts_options()  # 该行打印配置项，方便调试时使用
+
+#生成本地文件（默认为.html文件）
+bar.render('./picture1.html') #将html文档命名为picture1
